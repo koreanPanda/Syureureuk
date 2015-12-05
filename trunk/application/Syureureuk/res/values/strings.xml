@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Syureureuk</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="Scene1_ko_1">나는 보았다.</string>
+    <string name="Scene1_ko_2">보아뱀의 그림을</string>
+    <string name="Scene1_ko_3">동물을 삼키는</string>
+    <string name="Scene1_ko_4">책 에서</string>
+    <string name="Scene1_ko_5">내가 여섯 살일 때</string>
+    <string name="Scene1_ko_entile">"여섯 살 때, 나는 책에서 동물을 삼키는 보아뱀의 그림을 보았다."</string>
+    
+    <string name="Scene1_eng_1">I saw</string>
+    <string name="Scene1_eng_2">a picture of a boa snake</string>
+    <string name="Scene1_eng_3">swallowing an animal</string>
+    <string name="Scene1_eng_4">in a book</string>
+    <string name="Scene1_eng_5">"when I was six years old."</string>
+
+</resources>
