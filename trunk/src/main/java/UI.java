@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,9 +67,6 @@ public class UI extends JFrame{
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
-//                fd = new FileDialog(this, "", FileDialog.LOAD);
-//                fd.setVisible(true);
-//                fd.getDirectory();
             }
         });
 
@@ -82,12 +80,10 @@ public class UI extends JFrame{
                 try {
                     engTxt.setKorResPath(fd.getDirectory() + fd.getFile());
                     ta_korText.setText(engTxt.getKorBook().getFullText());
+                    System.out.print(ta_korText.getText());
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
-//                fd = new FileDialog(this, "", FileDialog.LOAD);
-//                fd.setVisible(true);
-//                fd.getDirectory();
             }
         });
         this.add(btn_importEngText);
@@ -95,5 +91,6 @@ public class UI extends JFrame{
 
         this.add(jsp_engText);
         this.add(jsp_korText);
+
     }
 }

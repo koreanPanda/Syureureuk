@@ -41,14 +41,14 @@ public class ResourceTxt extends BufferedReader{
         String countUnits = "";
         fullText.append("<font size = 4 face=\"돋움\">");
         for(i = 0 ; i < textLine ;i++){
-            fullText.append("<p>");
+//            fullText.append("<p>");
             countUnits = Integer.toString( (i + 1) );
             fullText.append("#");
             fullText.append(countUnits);
             fullText.append("[");
             fullText.append(this.getSceneString(i));
             fullText.append("]");
-            fullText.append("</p>");
+            fullText.append("<br>");
         }
         fullText.append("</font>");
         return fullText.toString();
