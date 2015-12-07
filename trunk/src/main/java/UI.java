@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * Created by Panda on 2015-11-27.
@@ -27,8 +26,8 @@ public class UI extends JFrame{
         JButton btn_importEngText = new JButton("+");
         JButton btn_export = new JButton("EXPORT");
 
-        final AbstractTextArea ta_korText = new AbstractTextArea();
-        final AbstractTextArea ta_engText = new AbstractTextArea();
+        final AbstractJEditorPane ta_korText = new AbstractJEditorPane();
+        final AbstractJEditorPane ta_engText = new AbstractJEditorPane();
         JScrollPane jsp_korText = new JScrollPane(ta_korText);
         JScrollPane jsp_engText = new JScrollPane(ta_engText);
 
