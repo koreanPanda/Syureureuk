@@ -25,13 +25,24 @@ public class ResourceTxt extends BufferedReader{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+}
 
     public int getTextLine(){
         return textLine;
     }
-    public ArrayList<String> getScene(){
-        return scene;
+
+    public String getSceneString(int sceneNumber){
+        return scene.get(sceneNumber);
+    }
+
+    public String getFullText(){
+        StringBuilder fullText = new StringBuilder("");
+        int i = 0;
+        for(i = 0 ; i < textLine ;i++){
+            fullText.append(this.getSceneString(i));
+            fullText.append("\n");
+        }
+        return fullText.toString();
     }
 
 

@@ -7,21 +7,21 @@ import java.io.FileReader;
  * Created by Panda on 2015-11-19.
  */
 public class ReadTxt {
-    String resourcePath;
+    String engResPath;
+    String korResPath;
+
     ResourceTxt engBook;
     ResourceTxt korBook;
 
-    public void setResourcePath(String resourcePath) throws FileNotFoundException {
-        this.resourcePath = resourcePath;
-        openFile();
-    }
-
-    private void openFile() throws FileNotFoundException {
-        String korResPath = resourcePath + "_english.txt";
-        String engResPath = resourcePath + "_korean.txt";
-        korBook = openTxt(korResPath);
+    public void setEngResPath(String resourcePath) throws FileNotFoundException {
+        this.engResPath = resourcePath;
         engBook = openTxt(engResPath);
     }
+    public void setKorResPath(String resourcePath) throws FileNotFoundException {
+        this.korResPath = resourcePath;
+        korBook = openTxt(korResPath);
+    }
+
     private ResourceTxt openTxt(String path) throws FileNotFoundException {
         ResourceTxt buffer = null;
         buffer = new ResourceTxt(new FileReader(path));

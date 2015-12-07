@@ -12,20 +12,18 @@ public class ReadTxtTest {
     public void OpenTxtTest() throws FileNotFoundException {
         ReadTxt readTxt = new ReadTxt();
         String absolutePath = readTxt.getAbsolutePath();
-        String resource_path = absolutePath + "\\src\\test\\resources\\TheLittlePrince";
-        System.out.println(resource_path);
-        readTxt.setResourcePath(resource_path);
-        Assert.assertNotNull(readTxt.getEngBook());
+        String resource_path = absolutePath + "\\src\\test\\resources\\TheLittlePrince_english.txt";
+        readTxt.setEngResPath(resource_path);
         Assert.assertNotNull(readTxt.getKorBook());
     }
 
-    @Test (expected = FileNotFoundException.class)
+    @Test (expected = NullPointerException.class)
     public void OpenEmptyTxtTest() throws FileNotFoundException {
         ReadTxt readTxt = new ReadTxt();
         String absolutePath = readTxt.getAbsolutePath();
         String resource_path = absolutePath + "\\src\\test\\resources\\emptyTxt";
         System.out.println(resource_path);
-        readTxt.setResourcePath(resource_path);
+        readTxt.setEngResPath(resource_path);
     }
 
 }

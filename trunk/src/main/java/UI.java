@@ -1,9 +1,16 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created by Panda on 2015-11-27.
  */
 public class UI extends JFrame{
+    Frame superFrame = this;
     public UI(){
         super("리소스 제작 툴");
         super.setSize(1000,600);
@@ -11,10 +18,6 @@ public class UI extends JFrame{
         componentSetting();
         super.setLayout(null);
         super.setResizable(false);
-    }
-    public static void main(String[] args){
-        UI ui = new UI();
-        ui.setVisible(true);
     }
 
     private void componentSetting(){
@@ -24,8 +27,11 @@ public class UI extends JFrame{
         JButton btn_importEngText = new JButton("+");
         JButton btn_export = new JButton("EXPORT");
 
-        JTextArea ta_korText = new JTextArea();
-        JTextArea ta_engText = new JTextArea();
+        final JTextArea ta_korText = new JTextArea();
+        final JTextArea ta_engText = new JTextArea();
+        JScrollPane jsp_korText = new JScrollPane(ta_korText);
+        JScrollPane jsp_engText = new JScrollPane(ta_engText);
+
 
         btn_textInsertMode.setSize(415,33);
         btn_textInsertMode.setLocation(100,30);
@@ -38,18 +44,57 @@ public class UI extends JFrame{
         btn_importKorText.setSize(33, 200);
         btn_importKorText.setLocation(50,300);
 
-        ta_korText.setSize(850,200);
-        ta_korText.setLocation(100,80);
-        ta_engText.setSize(850,200);
-        ta_engText.setLocation(100,300);
+        jsp_engText.setSize(850,200);
+        jsp_engText.setLocation(100,80);
+        jsp_korText.setSize(850,200);
+        jsp_korText.setLocation(100,300);
+        //////////////////////////////////////////////////////////////
 
         this.add(btn_textInsertMode);
         this.add(btn_delimitersAddMode);
         this.add(btn_export);
+
+        btn_importEngText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File temp = null;
+                FileDialog fd = new FileDialog(superFrame, "txt파일 열기", FileDialog.LOAD);
+                fd.setVisible(true);
+                ReadTxt engTxt = new ReadTxt();
+                try {
+                    engTxt.setEngResPath(fd.getDirectory() + fd.getFile());
+                    ta_engText.setText(engTxt.getEngBook().getFullText());
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+//                fd = new FileDialog(this, "", FileDialog.LOAD);
+//                fd.setVisible(true);
+//                fd.getDirectory();
+            }
+        });
+
+        btn_importKorText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File temp = null;
+                FileDialog fd = new FileDialog(superFrame, "txt파일 열기", FileDialog.LOAD);
+                fd.setVisible(true);
+                ReadTxt engTxt = new ReadTxt();
+                try {
+                    engTxt.setKorResPath(fd.getDirectory() + fd.getFile());
+                    ta_korText.setText(engTxt.getKorBook().getFullText());
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+//                fd = new FileDialog(this, "", FileDialog.LOAD);
+//                fd.setVisible(true);
+//                fd.getDirectory();
+            }
+        });
         this.add(btn_importEngText);
         this.add(btn_importKorText);
 
-        this.add(ta_engText);
-        this.add(ta_korText);
+        this.add(jsp_engText);
+        this.add(jsp_korText);
     }
 }
