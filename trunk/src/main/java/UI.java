@@ -27,8 +27,8 @@ public class UI extends JFrame{
         JButton btn_importEngText = new JButton("+");
         JButton btn_export = new JButton("EXPORT");
 
-        final JTextArea ta_korText = new JTextArea();
-        final JTextArea ta_engText = new JTextArea();
+        final AbstractTextArea ta_korText = new AbstractTextArea();
+        final AbstractTextArea ta_engText = new AbstractTextArea();
         JScrollPane jsp_korText = new JScrollPane(ta_korText);
         JScrollPane jsp_engText = new JScrollPane(ta_engText);
 
