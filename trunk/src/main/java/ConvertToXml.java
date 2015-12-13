@@ -1,10 +1,12 @@
 
+import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,45 +25,73 @@ public class ConvertToXml {
     }
 
 
-    public void exportToXml(){
-        Document doc = new Document();
-
-        Element root = new Element("generator");
-
-        Element pack = new Element("package");
-
-        Element pack_name = new Element("package-name");
-
-        root.addContent(pack);//root element 의 하위 element 를 만들기
-        pack.addContent(pack_name); //package element 의 하위로 package-name 만들기
-
-        pack_name.setText("com.oss_project.shere");
-        //package-name element 에 value 값을 text 로 넣어 주기
-
-        doc.setRootElement(root);
-
+    public void exportToXml(String filePath){;
         try {
-            FileOutputStream out = new FileOutputStream("d:\\test.xml");
-            //xml 파일을 떨구기 위한 경로와 파일 이름 지정해 주기
-            XMLOutputter serializer = new XMLOutputter();
+            Document doc = new Document();
 
-            Format f = serializer.getFormat();
-            f.setEncoding("UTF-8");
-            //encoding 타입을 UTF-8 로 설정
-            f.setIndent(" ");
-            f.setLineSeparator("\r\n");
-            f.setTextMode(Format.TextMode.TRIM);
-            serializer.setFormat(f);
+            Element root = new Element("resources");
 
-            serializer.output(doc, out);
-            out.flush();
-            out.close();
+            doc.setRootElement(root);
 
-            //String 으로 xml 출력
-            // XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding("UTF-8")) ;
-            // System.out.println(outputter.outputString(doc));
+            int sceneSize = scenes.size();
+            for(int scene_idx = 0; scene_idx< sceneSize; scene_idx++){
+                Scene tempScene = scenes.get(scene_idx);
+
+                Element scene = new Element("scene");
+                String scene_id = (scene_idx + 1) + "";
+                scene.setAttribute(new Attribute("id", scene_id));
+                Element eng_txt = new Element("eng_txt");
+                Element kor_txt = new Element("kor_txt");
+
+                int meaningUnitSize = tempScene.getKorMeaningUnitCounts();
+                for(int meaningUnit_idx = 0; meaningUnit_idx<meaningUnitSize; meaningUnit_idx++){
+                    Element string = new Element("string");
+                    StringBuilder kor_name = new StringBuilder("");
+                    kor_name.append("scene");
+                    kor_name.append(scene_id);
+                    kor_name.append("_kor_");
+                    kor_name.append(meaningUnit_idx);
+                    string.setName(kor_name.toString());
+                    string.setText(tempScene.getKorMeaningUnit().get(meaningUnit_idx));
+                    kor_txt.addContent(string);
+                }
+
+                meaningUnitSize = tempScene.getEngMeaningUnitCounts();
+                for(int meaningUnit_idx = 0; meaningUnit_idx<meaningUnitSize; meaningUnit_idx++){
+                    Element string = new Element("string");
+                    StringBuilder eng_name = new StringBuilder("");
+                    eng_name.append("scene");
+                    eng_name.append(scene_id);
+                    eng_name.append("_eng_");
+                    eng_name.append(meaningUnit_idx);
+
+                    string.setName(eng_name.toString());
+                    string.setText(tempScene.getEngMeaningUnit().get(meaningUnit_idx));
+                    eng_txt.addContent(string);
+                }
+
+                Element string = new Element("string");
+                StringBuilder kor_fulltext_name = new StringBuilder("");
+                kor_fulltext_name.append("scene");
+                kor_fulltext_name.append(scene_id);
+                kor_fulltext_name.append("_complete");
+                string.setName(kor_fulltext_name.toString());
+                string.setText(tempScene.getKorFullMeaning());
+                kor_txt.addContent(string);
+
+                scene.addContent(eng_txt);
+                scene.addContent(kor_txt);
+                doc.getRootElement().addContent(scene);
+            }
+
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat());
+            xmlOutput.output(doc, new FileWriter(filePath));
+
         } catch (IOException e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
+
+
     }
 }

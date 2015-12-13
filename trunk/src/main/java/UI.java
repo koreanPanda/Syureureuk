@@ -71,7 +71,9 @@ public class UI extends JFrame{
         btn_export.setEnabled(false);
         btn_export.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                FileDialog fd = new FileDialog(superFrame, "txt파일 열기", FileDialog.SAVE);
+                fd.setVisible(true);
+                DO.exportToXml(fd.getDirectory() + fd.getFile());
             }
         });
 
@@ -79,7 +81,6 @@ public class UI extends JFrame{
 
         btn_importEngText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                File temp = null;
                 FileDialog fd = new FileDialog(superFrame, "txt파일 열기", FileDialog.LOAD);
                 fd.setVisible(true);
                 ReadTxt engTxt = new ReadTxt();
@@ -94,7 +95,6 @@ public class UI extends JFrame{
 
         btn_importKorText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                File temp = null;
                 FileDialog fd = new FileDialog(superFrame, "txt파일 열기", FileDialog.LOAD);
                 fd.setVisible(true);
                 ReadTxt engTxt = new ReadTxt();
