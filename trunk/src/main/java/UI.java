@@ -51,11 +51,24 @@ public class UI extends JFrame{
         //////////////////////////////////////////////////////////////
 
         this.add(btn_textInsertMode);
+
+        btn_delimitersAddMode.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+
         this.add(btn_delimitersAddMode);
+
+        btn_export.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         this.add(btn_export);
 
         btn_importEngText.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 File temp = null;
                 FileDialog fd = new FileDialog(superFrame, "txt파일 열기", FileDialog.LOAD);
@@ -71,7 +84,6 @@ public class UI extends JFrame{
         });
 
         btn_importKorText.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 File temp = null;
                 FileDialog fd = new FileDialog(superFrame, "txt파일 열기", FileDialog.LOAD);
@@ -80,7 +92,6 @@ public class UI extends JFrame{
                 try {
                     engTxt.setKorResPath(fd.getDirectory() + fd.getFile());
                     ta_korText.setText(engTxt.getKorBook().getFullText());
-                    System.out.print(ta_korText.getText());
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
