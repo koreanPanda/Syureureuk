@@ -121,6 +121,19 @@ public class CheckFormat {
         return result;
     }
 
+    public ArrayList<Scene> toScenes(String engText, String korText){
+        ArrayList<String> engTexts = divideTextLine(engText);
+        ArrayList<String> korTexts = divideTextLine(korText);
+        ArrayList<Scene> result = new ArrayList<Scene>();
+
+        int sceneSize = engTexts.size();
+        for(int i=0;i<sceneSize;i++){
+            result.add(toScene(engTexts.get(i), korTexts.get(i)));
+        }
+
+        return result;
+    }
+
     public Scene toScene(String engText, String korText){
         int textLength = korText.length();
         Scene result = new Scene();

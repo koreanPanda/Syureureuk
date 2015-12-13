@@ -39,4 +39,11 @@ public class Scene {
     public void setKorFullMeaning(String korFullMeaning) {
         this.korFullMeaning = korFullMeaning;
     }
+
+    public int getKorMeaningUnitCounts(){
+        return korMeaningUnit.size();
+    }
+    public int getEngMeaningUnitCounts(){
+        return engMeaningUnit.size();
+    }
 }

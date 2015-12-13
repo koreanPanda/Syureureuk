@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
  */
 public class UI extends JFrame{
     Frame superFrame = this;
+    ConvertToXml DO = new ConvertToXml();
+
     public UI(){
         super("리소스 제작 툴");
         super.setSize(1000,600);
@@ -25,7 +27,7 @@ public class UI extends JFrame{
         JButton btn_delimitersAddMode = new JButton("구분기호 생성 모드");
         JButton btn_importKorText = new JButton("+");
         JButton btn_importEngText = new JButton("+");
-        JButton btn_export = new JButton("EXPORT");
+        final JButton btn_export = new JButton("EXPORT");
 
         final AbstractJEditorPane ta_korText = new AbstractJEditorPane();
         final AbstractJEditorPane ta_engText = new AbstractJEditorPane();
@@ -54,15 +56,22 @@ public class UI extends JFrame{
 
         btn_delimitersAddMode.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                CheckFormat checkFormat = new CheckFormat();
+                String engText = ta_engText.getTextWithoutHTML();
+                String korText = ta_korText.getTextWithoutHTML();
+                if(checkFormat.checkFormat(engText, korText)){
+                    DO.setScenes(checkFormat.toScenes(engText, korText));
+                    btn_export.setEnabled(true);
+                }
             }
         });
 
         this.add(btn_delimitersAddMode);
 
+        btn_export.setEnabled(false);
         btn_export.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                
             }
         });
 
