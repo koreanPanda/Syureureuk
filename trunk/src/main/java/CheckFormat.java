@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Created by Panda on 2015-12-07.
         */
 public class CheckFormat {
-
+    String errorList = "";
     /**
      * isExistDoubleQuotationMarks(string)
      * if text has twoDoubleQuotationMarks return true
@@ -34,7 +34,7 @@ public class CheckFormat {
 
 
     public boolean isSameCountSlashInTwoSentence(String first, String second) {
-        // ë‘ë¬¸ì¥ì˜ slashì˜ ê°¯ìˆ˜ê°€ ì¼ì¹˜í• ë•Œ true
+        // µÎ¹®ÀåÀÇ slashÀÇ °¹¼ö°¡ ÀÏÄ¡ÇÒ¶§ true
         if( countCharacterInSentence(first, '/') ==
             countCharacterInSentence(second, '/')){
             return true;
@@ -69,21 +69,49 @@ public class CheckFormat {
         return true;
     }
 
+    public boolean isExistSlash_AllLine(String korText){
+        int textLength = korText.length();
+        int result = 0;
+        int startIdx = 0;
+        int lastIdx = -1;
+        String tempString = "";
+        for(int i=0;i<textLength;i++){
+            if(korText.charAt(i) == '\n'){
+                lastIdx = i;
+                tempString = korText.substring(startIdx,lastIdx);
+                startIdx = lastIdx+1;
+                if(countCharacterInSentence(tempString,'/') != 0){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public boolean checkFormat(String engText, String korText){
-        // ì¤„ìˆ˜(Sceneì˜ ê°¯ìˆ˜ê°€ ê°™ì€ì§€ í™•ì¸)
+        // ÁÙ¼ö(SceneÀÇ °¹¼ö°¡ °°ÀºÁö È®ÀÎ)
         if (getLineCount(engText) != getLineCount(korText)){
+            this.setErrorList("¿µ¾î¸®¼Ò½º¿Í ÇÑ±Û¸®¼Ò½ºÀÇ ÁÙ¼ö°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.");
             return false;
         }
-        // ê° í•œê¸€ì˜ ì¤„ë³„ë¡œ ""ê°€ ì§ì— ë§ê²Œ ìˆëŠ”ì§€ í™•ì¸
+        // °¢ ÇÑ±ÛÀÇ ÁÙº°·Î ""°¡ Â¦¿¡ ¸Â°Ô ÀÖ´ÂÁö È®ÀÎ
         else if (!isExistDQ_Marks_AllLine(korText)){
+            this.setErrorList("ÇÑ±Û¸®¼Ò½º¿¡¼­ µû¿ÈÇ¥°¡ ¾ø´Â ¹®ÀåÀÌ ÀÖ½À´Ï´Ù.");
             return false;
         }
-        // slashì˜ ê°¯ìˆ˜ê°€ ë§ëŠ”ì§€ í™•ì¸
+        // °¢ ÁÙº°·Î slash°¡ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+        else if (!isExistSlash_AllLine(korText)){
+            this.setErrorList("/ °¡ ¾ø´Â ÁÙÀÌ ÀÖ½À´Ï´Ù.");
+            return false;
+        }
+        // slashÀÇ °¹¼ö°¡ ¸Â´ÂÁö È®ÀÎ
         else if (!isSameCountSlashInTwoSentence(engText, korText)){
+            this.setErrorList("/ ÀÇ °¹¼ö°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
             return false;
         }
-        // ë‹¤ë§ìœ¼ë©´ íŠ¸ë£¨ í•˜ë‚˜ë¼ë„ í‹€ë¦¬ë©´ false
+        // ´Ù¸ÂÀ¸¸é Æ®·ç ÇÏ³ª¶óµµ Æ²¸®¸é false
         else{
+            this.setErrorList("¾ç½Ä¿¡ ¸Â½À´Ï´Ù. ÀÌÁ¦ Ãâ·ÂÀÌ °¡´ÉÇÕ´Ï´Ù.");
             return true;
         }
     }
@@ -202,5 +230,12 @@ public class CheckFormat {
         );
 
         return result;
+    }
+
+    public void setErrorList(String cause){
+        this.errorList = cause;
+    }
+    public String getErrorList(){
+        return errorList;
     }
 }

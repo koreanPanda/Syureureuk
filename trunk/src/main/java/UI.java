@@ -14,7 +14,7 @@ public class UI extends JFrame{
     ConvertToXml DO = new ConvertToXml();
 
     public UI(){
-        super("Î¶¨ÏÜåÏä§ Ï†úÏûë Ìà¥");
+        super("∏Æº“Ω∫ ¡¶¿€ ≈¯");
         super.setSize(1000,600);
         super.setLocationRelativeTo(null);
         componentSetting();
@@ -23,8 +23,8 @@ public class UI extends JFrame{
     }
 
     private void componentSetting(){
-        JButton btn_textInsertMode = new JButton("ÌÖçÏä§Ìä∏ ÏûÖÎ†• Î™®Îìú");
-        JButton btn_delimitersAddMode = new JButton("Íµ¨Î∂ÑÍ∏∞Ìò∏ ÏÉùÏÑ± Î™®Îìú");
+        JButton btn_textInsertMode = new JButton("≈ÿΩ∫∆Æ ¿‘∑¬ ∏µÂ");
+        JButton btn_delimitersAddMode = new JButton("ø°∑Ø ∞ÀªÁ");
         JButton btn_importKorText = new JButton("+");
         JButton btn_importEngText = new JButton("+");
         final JButton btn_export = new JButton("EXPORT");
@@ -34,7 +34,10 @@ public class UI extends JFrame{
         JScrollPane jsp_korText = new JScrollPane(ta_korText);
         JScrollPane jsp_engText = new JScrollPane(ta_engText);
 
-
+        final JLabel jl_error = new JLabel();
+        jl_error.setText("");
+        // location //
+        //////////////////////////////////////////////////////////////
         btn_textInsertMode.setSize(415,33);
         btn_textInsertMode.setLocation(100,30);
         btn_delimitersAddMode.setSize(415,33);
@@ -50,6 +53,10 @@ public class UI extends JFrame{
         jsp_engText.setLocation(100,80);
         jsp_korText.setSize(850,200);
         jsp_korText.setLocation(100,300);
+
+        jl_error.setSize(700,33);
+        jl_error.setLocation(100,520);
+        jl_error.setHorizontalAlignment(JLabel.CENTER);
         //////////////////////////////////////////////////////////////
 
         this.add(btn_textInsertMode);
@@ -63,15 +70,17 @@ public class UI extends JFrame{
                     DO.setScenes(checkFormat.toScenes(engText, korText));
                     btn_export.setEnabled(true);
                 }
+                jl_error.setText(checkFormat.getErrorList());
             }
         });
 
         this.add(btn_delimitersAddMode);
 
         btn_export.setEnabled(false);
+
         btn_export.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FileDialog fd = new FileDialog(superFrame, "txtÌååÏùº Ïó¥Í∏∞", FileDialog.SAVE);
+                FileDialog fd = new FileDialog(superFrame, "txt∆ƒ¿œ ø≠±‚", FileDialog.SAVE);
                 fd.setVisible(true);
                 DO.exportToXml(fd.getDirectory() + fd.getFile());
             }
@@ -81,7 +90,7 @@ public class UI extends JFrame{
 
         btn_importEngText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FileDialog fd = new FileDialog(superFrame, "txtÌååÏùº Ïó¥Í∏∞", FileDialog.LOAD);
+                FileDialog fd = new FileDialog(superFrame, "txt∆ƒ¿œ ø≠±‚", FileDialog.LOAD);
                 fd.setVisible(true);
                 ReadTxt engTxt = new ReadTxt();
                 try {
@@ -95,7 +104,7 @@ public class UI extends JFrame{
 
         btn_importKorText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FileDialog fd = new FileDialog(superFrame, "txtÌååÏùº Ïó¥Í∏∞", FileDialog.LOAD);
+                FileDialog fd = new FileDialog(superFrame, "txt∆ƒ¿œ ø≠±‚", FileDialog.LOAD);
                 fd.setVisible(true);
                 ReadTxt engTxt = new ReadTxt();
                 try {
@@ -111,6 +120,8 @@ public class UI extends JFrame{
 
         this.add(jsp_engText);
         this.add(jsp_korText);
+
+        this.add(jl_error);
 
     }
 }
