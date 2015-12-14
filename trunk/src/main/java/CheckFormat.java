@@ -56,7 +56,7 @@ public class CheckFormat {
         int lastIdx = -1;
         String tempString = "";
         for(int i=0;i<textLength;i++){
-            if(korText.charAt(i) == '\n'){
+            if(korText.charAt(i) == '\n' || i == textLength-1){
                 lastIdx = i;
                 tempString = korText.substring(startIdx,lastIdx);
                 startIdx = lastIdx+1;
@@ -69,25 +69,25 @@ public class CheckFormat {
         return true;
     }
 
-    public boolean isExistSlash_AllLine(String korText){
-        int textLength = korText.length();
+    public boolean isExistSlash_AllLine(String text){
+        int textLength = text.length();
         int result = 0;
         int startIdx = 0;
         int lastIdx = -1;
         String tempString = "";
         for(int i=0;i<textLength;i++){
-            if(korText.charAt(i) == '\n'){
+            if(text.charAt(i) == '\n'|| i == textLength-1){
                 lastIdx = i;
-                tempString = korText.substring(startIdx,lastIdx);
+                tempString = text.substring(startIdx,lastIdx);
                 startIdx = lastIdx+1;
-                if(countCharacterInSentence(tempString,'/') != 0){
+                if(countCharacterInSentence(tempString,'/') == 0 ){
                     return false;
                 }
             }
         }
+
         return true;
     }
-
     public boolean checkFormat(String engText, String korText){
         // 줄수(Scene의 갯수가 같은지 확인)
         if (getLineCount(engText) != getLineCount(korText)){
@@ -99,9 +99,14 @@ public class CheckFormat {
             this.setErrorList("한글리소스에서 따옴표가 없는 문장이 있습니다.");
             return false;
         }
-        // 각 줄별로 slash가 존재하는지 확인
+        // 한글리소스에 줄별로 /가 있는지 확인
+        else if (!isExistSlash_AllLine(engText)){
+            this.setErrorList("영어리소스에서 '/'가 없는 문장이 있습니다.");
+            return false;
+        }
+        // 영어리소스에 줄별로 /가 있는지 확인
         else if (!isExistSlash_AllLine(korText)){
-            this.setErrorList("/ 가 없는 줄이 있습니다.");
+            this.setErrorList("한글리소스에서 '/'가 없는 문장이 있습니다.");
             return false;
         }
         // slash의 갯수가 맞는지 확인
